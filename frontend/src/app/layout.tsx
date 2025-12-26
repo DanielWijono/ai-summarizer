@@ -40,6 +40,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://aivideosummarizernote.netlify.app",
   },
+  verification: {
+    google: "h5ePgW-Yb-ejR5MR2gWXSH7Zpimj3EvJBbQVvjWPHRE",
+  },
 };
 
 
