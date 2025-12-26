@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ai-summarizer-backend
+    env: docker
+    region: singapore
+    plan: free
+    dockerContext: backend
+    dockerfilePath: backend/Dockerfile
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: PORT
+        value: 8000
