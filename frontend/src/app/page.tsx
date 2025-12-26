@@ -12,6 +12,22 @@ export default function LandingPage() {
 
   const currentYear = new Date().getFullYear();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AI Summarizer",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "IDR"
+    },
+    "description": "Tools AI untuk merangkum rekaman meeting video & audio menjadi transkrip, poin penting, dan action items secara otomatis.",
+    "featureList": "Transkrip Otomatis, Smart Summary, Action Items Detection",
+    "screenshot": "https://aivideosummarizernote.netlify.app/og-image.jpg"
+  };
+
   if (loading) {
     return (
       <div className="auth-container">
@@ -27,6 +43,10 @@ export default function LandingPage() {
 
   return (
     <div className="landing-page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <nav className="landing-nav">
         <div className="navbar-brand">
           <svg viewBox="0 0 24 24" fill="currentColor">
