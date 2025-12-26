@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -19,7 +19,7 @@ interface BankInfo {
     account_holder: string;
 }
 
-export default function BuyCreditsPage() {
+function BuyCreditsContent() {
     const [packages, setPackages] = useState<PackageData[]>([]);
     const [bankInfo, setBankInfo] = useState<BankInfo | null>(null);
     const [selectedPackage, setSelectedPackage] = useState<PackageData | null>(null);
@@ -281,5 +281,13 @@ export default function BuyCreditsPage() {
                 )}
             </div>
         </div>
+    );
+}
+
+export default function BuyCreditsPage() {
+    return (
+        <Suspense fallback={<div className="auth-container"><div className="loader" /></div>}>
+            <BuyCreditsContent />
+        </Suspense>
     );
 }
