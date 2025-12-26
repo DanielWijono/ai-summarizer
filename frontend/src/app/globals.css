@@ -2871,3 +2871,23 @@ body {
       display: none;
   }
 }
+
+/* Auth Back Link */
+.auth-back-link {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+  z-index: 10;
+}
+
+.auth-back-link:hover {
+  color: var(--accent-primary);
+}
