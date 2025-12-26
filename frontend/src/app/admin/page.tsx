@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -22,7 +22,7 @@ interface Purchase {
 
 type TabType = "pending" | "history";
 
-export default function AdminPage() {
+function AdminContent() {
     const [activeTab, setActiveTab] = useState<TabType>("pending");
     const [purchases, setPurchases] = useState<Purchase[]>([]);
     const [history, setHistory] = useState<Purchase[]>([]);
@@ -470,5 +470,18 @@ export default function AdminPage() {
                 </div>
             )}
         </div>
+    );
+}
+
+export default function AdminPage() {
+    return (
+        <Suspense fallback={
+            <div className="admin-loading">
+                <div className="admin-loading-spinner"></div>
+                <p>Memuat halaman admin...</p>
+            </div>
+        }>
+            <AdminContent />
+        </Suspense>
     );
 }
