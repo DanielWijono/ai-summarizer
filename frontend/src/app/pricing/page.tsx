@@ -86,8 +86,8 @@ export default function PricingPage() {
             </nav>
 
             <div className="pricing-header">
-                <h1>Beli Credits</h1>
-                <p>Gunakan credits untuk summarize meeting Anda</p>
+                <h1>Investasi Produktivitas</h1>
+                <p>Pilih paket yang sesuai untuk mengamankan data & pengetahuan tim Anda</p>
             </div>
 
             <div className="pricing-grid">
@@ -118,25 +118,25 @@ export default function PricingPage() {
                                 <svg className="check-icon" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                                 </svg>
-                                <span>Credits tidak expire</span>
+                                <span>Akun & Data Privat</span>
                             </li>
                             <li>
                                 <svg className="check-icon" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                                 </svg>
-                                <span>Video sampai 90 menit</span>
+                                <span>Export PDF/Text & Subtitle</span>
                             </li>
                             <li>
                                 <svg className="check-icon" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                                 </svg>
-                                <span>Export hasil</span>
+                                <span>Mendukung Ind & Eng (Mix)</span>
                             </li>
                             <li>
                                 <svg className="check-icon" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                                 </svg>
-                                <span>Simpan rekaman: {pkg.retention_period}</span>
+                                <span>Hapus dalam: <strong>{pkg.retention_period}</strong></span>
                             </li>
                         </ul>
 
