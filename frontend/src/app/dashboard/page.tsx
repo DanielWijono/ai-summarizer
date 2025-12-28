@@ -56,7 +56,8 @@ export default function DashboardPage() {
   const [isRetrying, setIsRetrying] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  const [userCredits, setUserCredits] = useState<{ total: number; free: number; paid: number; maxDuration: number; maxFileSize: number } | null>(null);
+
+  const [userCredits, setUserCredits] = useState<{ total: number; free: number; paid: number; maxDuration: number; maxFileSize: number; tierName: string } | null>(null);
   const [openSections, setOpenSections] = useState({
     summary: true,
     keyPoints: true,
@@ -79,7 +80,8 @@ export default function DashboardPage() {
             free: data.free_credits,
             paid: data.paid_credits,
             maxDuration: data.max_duration || 20,
-            maxFileSize: data.max_file_size || 150
+            maxFileSize: data.max_file_size || 150,
+            tierName: data.tier_name || "Free"
           });
         })
         .catch(console.error);
@@ -432,7 +434,11 @@ ${result.transcript}
           {showUserMenu && (
             <div className="user-dropdown">
               <div className="dropdown-header">
-                <p className="user-name">{user.user_metadata?.full_name || "User"}</p>
+                <p className="user-name">
+                  {user.user_metadata?.full_name || "User"}
+                  {userCredits?.tierName === "Pro" && <span style={{ marginLeft: "6px", fontSize: "0.75rem", background: "linear-gradient(45deg, #FFD700, #FFA500)", color: "#000", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold" }}>PRO</span>}
+                  {userCredits?.tierName === "Value" && <span style={{ marginLeft: "6px", fontSize: "0.75rem", background: "#4a9eff", color: "#fff", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold" }}>VALUE</span>}
+                </p>
                 <p className="user-email">{user.email}</p>
               </div>
               <div className="dropdown-divider" />

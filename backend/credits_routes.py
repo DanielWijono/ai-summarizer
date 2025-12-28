@@ -89,7 +89,8 @@ async def get_credit_balance(user_id: str):
             "total_used": credits.get("total_used", 0),
             "free_credits_reset_at": credits.get("free_credits_reset_at"),
             "max_duration": credits.get("max_duration", 20),
-            "max_file_size": credits.get("max_file_size", 150)
+            "max_file_size": credits.get("max_file_size", 150),
+            "tier_name": credits.get("tier_name", "Free")
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
