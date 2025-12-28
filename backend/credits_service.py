@@ -49,11 +49,29 @@ class CreditsService:
         # Default (Starter or Free)
         return 20
 
+    def get_user_max_file_size(self, user_id: str) -> int:
+        """Get max file size in MB based on highest package purchased."""
+        result = self.supabase.table("credit_purchases").select("package_id").eq(
+            "user_id", user_id
+        ).eq("status", "approved").execute()
+        
+        purchases = result.data or []
+        package_ids = [p["package_id"] for p in purchases]
+        
+        if "pro" in package_ids:
+            return 500
+        if "value" in package_ids:
+            return 300
+            
+        return 150
+
+
     def get_user_credits(self, user_id: str) -> Dict[str, Any]:
         """Get user's credit balance and info."""
         result = self.supabase.table("user_credits").select("*").eq("user_id", user_id).single().execute()
         
         max_duration = self.get_user_max_duration(user_id)
+        max_file_size = self.get_user_max_file_size(user_id)
         
         if result.data:
             # Check if free credits need reset
@@ -62,6 +80,7 @@ class CreditsService:
             result = self.supabase.table("user_credits").select("*").eq("user_id", user_id).single().execute()
             data = result.data
             data["max_duration"] = max_duration
+            data["max_file_size"] = max_file_size
             return data
         
         # Create default credits record
@@ -75,6 +94,7 @@ class CreditsService:
         }
         self.supabase.table("user_credits").insert(new_credits).execute()
         new_credits["max_duration"] = max_duration
+        new_credits["max_file_size"] = max_file_size
         return new_credits
     
     def _reset_free_credits_if_needed(self, user_id: str, credits: Dict) -> None:

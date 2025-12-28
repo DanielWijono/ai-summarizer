@@ -45,7 +45,7 @@ const ALLOWED_EXTENSIONS = [
   ".mp3", ".wav", ".m4a", ".ogg",
   ".mp4", ".mov", ".mkv", ".avi", ".webm"
 ];
-const MAX_FILE_SIZE = 50 * 1024 * 1024;
+// const MAX_FILE_SIZE = 50 * 1024 * 1024; // Deprecated, using dynamic check
 
 export default function DashboardPage() {
   const { user, loading, signOut } = useAuth();
@@ -55,7 +55,8 @@ export default function DashboardPage() {
   const [isDragging, setIsDragging] = useState(false);
   const [isRetrying, setIsRetrying] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [userCredits, setUserCredits] = useState<{ total: number; free: number; paid: number; maxDuration: number } | null>(null);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [userCredits, setUserCredits] = useState<{ total: number; free: number; paid: number; maxDuration: number; maxFileSize: number } | null>(null);
   const [openSections, setOpenSections] = useState({
     summary: true,
     keyPoints: true,
@@ -77,7 +78,8 @@ export default function DashboardPage() {
             total: data.total_credits,
             free: data.free_credits,
             paid: data.paid_credits,
-            maxDuration: data.max_duration || 20
+            maxDuration: data.max_duration || 20,
+            maxFileSize: data.max_file_size || 150
           });
         })
         .catch(console.error);
@@ -100,8 +102,11 @@ export default function DashboardPage() {
     if (!ALLOWED_EXTENSIONS.includes(ext)) {
       return "Format file tidak didukung";
     }
-    if (file.size > MAX_FILE_SIZE) {
-      return "File terlalu besar (max 50MB)";
+    const maxMb = userCredits?.maxFileSize || 50; // default 50 if loading
+    const maxBytes = maxMb * 1024 * 1024;
+
+    if (file.size > maxBytes) {
+      return `File terlalu besar (max ${maxMb}MB)`;
     }
     return null;
   };
@@ -501,7 +506,7 @@ ${result.transcript}
               </p>
               {!isProcessing && (
                 <p className="upload-hint" style={{ marginTop: '8px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                  *Max size: 50MB. Max duration: {getMaxDuration()} mins.
+                  *Max size: {userCredits?.maxFileSize || 50}MB. Max duration: {getMaxDuration()} mins.
                 </p>
               )}
             </div>
@@ -576,7 +581,7 @@ ${result.transcript}
                 </svg>
                 <h3 className="empty-state-title">Upload a meeting to generate summary and insights.</h3>
                 <p className="empty-state-text">Drag & drop or click upload to get started.</p>
-                <p className="empty-state-hint">*Max file size: 50MB</p>
+                <p className="empty-state-hint">*Max file size: {userCredits?.maxFileSize || 50}MB</p>
               </div>
             ) : selectedFile.status === "processing" ? (
               <div className="empty-state">
