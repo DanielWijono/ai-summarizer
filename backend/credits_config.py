@@ -68,6 +68,7 @@ DURATION_TIERS: List[DurationTier] = [
     DurationTier(max_minutes=20, credits_required=1, max_file_mb=150),
     DurationTier(max_minutes=45, credits_required=2, max_file_mb=300),
     DurationTier(max_minutes=90, credits_required=3, max_file_mb=500),
+    DurationTier(max_minutes=180, credits_required=6, max_file_mb=500),
 ]
 
 # Free tier config
@@ -85,7 +86,7 @@ def get_credits_required(duration_minutes: int) -> int:
     for tier in DURATION_TIERS:
         if duration_minutes <= tier.max_minutes:
             return tier.credits_required
-    return 3  # Max credits for very long videos
+    return 6  # Max credits for very long videos
 
 
 def get_max_file_size(duration_minutes: int) -> int:

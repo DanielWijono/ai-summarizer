@@ -42,7 +42,7 @@ class CreditsService:
         
         # Check hierarchy: Pro > Value > Starter/Free
         if "pro" in package_ids:
-            return 90
+            return 180
         if "value" in package_ids:
             return 45
             
