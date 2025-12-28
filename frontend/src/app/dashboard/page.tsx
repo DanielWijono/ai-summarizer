@@ -55,7 +55,7 @@ export default function DashboardPage() {
   const [isDragging, setIsDragging] = useState(false);
   const [isRetrying, setIsRetrying] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(false);
+
   const [userCredits, setUserCredits] = useState<{ total: number; free: number; paid: number; maxDuration: number; maxFileSize: number } | null>(null);
   const [openSections, setOpenSections] = useState({
     summary: true,
